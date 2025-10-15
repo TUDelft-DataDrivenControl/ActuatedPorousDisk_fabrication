@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+####### Custom
+01_Hardware/ElectronicsV3/ElectronicsV3-backups*

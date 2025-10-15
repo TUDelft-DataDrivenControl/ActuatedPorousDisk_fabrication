@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 
 def setPlotStyle():
     plt.rcParams.update({ 'text.usetex':        False,              'mathtext.fontset':         'cm',
-                      'font.size':          16.0,               'axes.labelsize':           'large',
-                      'xtick.labelsize':    'medium',           'ytick.labelsize':          'medium',
+                      'font.size':          18.0,               'axes.labelsize':           'large',
+                      'xtick.labelsize':    'large',           'ytick.labelsize':          'large',
                       'axes.grid':          True,               'axes.formatter.limits':    [-3, 6],
                       'grid.alpha':         0.5,                'figure.figsize':           [10.0, 10.0/1.618],
                       'figure.constrained_layout.use': True,    'scatter.marker':           'x',
-                      'savefig.dpi':        600,                'savefig.bbox':             'tight',
+                      'savefig.dpi':        1200,                'savefig.bbox':             'tight',
                       'savefig.pad_inches': 0.05,               #'savefig.transparent':      True
                       })
 

@@ -64,7 +64,7 @@ inline void setupPorts()
 {
     analogReadResolution(12);
     analogWriteResolution(12);
-    analogWriteFrequency(2000); // Play around with the value, but note the update rate of the tasks is a 1000Hz at most, so don´t go to low
+    analogWriteFrequency(2000); // Play around with the value, but note the update rate of the tasks is a 1000Hz at most, so don´t go too low
     pinMode(potmeterPin, INPUT);
     pinMode(motorEnablePin, OUTPUT);
     pinMode(motorStopPin, OUTPUT);

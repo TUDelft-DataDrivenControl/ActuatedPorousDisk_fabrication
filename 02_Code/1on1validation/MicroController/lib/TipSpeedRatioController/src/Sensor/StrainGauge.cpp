@@ -8,16 +8,15 @@
 #include "Calibration/AnalogCalibrationPoint.h"
 #include "Interpolation/LeastSquares.h"
 
-Sensor::StrainGauge::StrainGauge(const int positiveDataPin, const int negativeDataPin, const int32_t tareValue) :
-    positiveDataPin(positiveDataPin), negativeDataPin(negativeDataPin), tareValue(tareValue)
+Sensor::StrainGauge::StrainGauge(const int positiveDataPin, const int negativeDataPin, const int32_t tareValue) : positiveDataPin(positiveDataPin), negativeDataPin(negativeDataPin), tareValue(tareValue)
 {
     pinMode(positiveDataPin, INPUT);
     pinMode(negativeDataPin, INPUT);
 }
 
-/**
- *DEPRECATED
- */
+// /**
+//  *DEPRECATED
+//  */
 void Sensor::StrainGauge::loadCalibrationMap() const
 {
     Preferences preferences;
@@ -32,7 +31,7 @@ void Sensor::StrainGauge::loadCalibrationMap() const
 
     const size_t byteCount{preferences.getBytesLength("samples")};
     const size_t calibrationPointCount{byteCount / sizeof(Calibration::AnalogCalibrationPoint)};
-    const auto calibrationPoints{static_cast<Calibration::AnalogCalibrationPoint*>(malloc(byteCount))};
+    const auto calibrationPoints{static_cast<Calibration::AnalogCalibrationPoint *>(malloc(byteCount))};
     preferences.getBytes("samples", calibrationPoints, byteCount);
     preferences.end();
 
@@ -71,10 +70,10 @@ int32_t Sensor::StrainGauge::readTaredRawData() const
  * @param slope Slope of the linear strain-force relationship
  * @param tareValue Value at zero load (if known) which can be set later
  */
-Sensor::I2CStrainGauge::I2CStrainGauge(const int channel, Adafruit_ADS1115* adsModule, const float constantOffset,
+Sensor::I2CStrainGauge::I2CStrainGauge(const int channel, Adafruit_ADS1115 *adsModule, const float constantOffset,
                                        const float slope, const long tareValue) : StrainGauge(0, 0, static_cast<short>(tareValue)),
                                                                                   channel(channel), adsModule(adsModule),
-                                                                                  constantOffset(- static_cast<float>(tareValue) * slope), slope(slope)
+                                                                                  constantOffset(-static_cast<float>(tareValue) * slope), slope(slope)
 {
 }
 
