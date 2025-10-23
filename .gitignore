@@ -419,3 +419,4 @@ FodyWeavers.xsd
 
 ####### Custom
 01_Hardware/ElectronicsV3/ElectronicsV3-backups*
+01_Hardware/Datasheets/*.pdf
