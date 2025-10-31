@@ -1,6 +1,5 @@
 
-#define FREQ_ACTUATION 500   // Hz
-#define FREQ_ACQUISITION 150 // Hz
+#define PERIOD_ACQUISITION 8 // ms
 
 // https://esp32s3.com/getting-started.html
 
@@ -51,10 +50,12 @@ void setup()
 
     // https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/freertos_additions.html#_CPPv423xTaskCreatePinnedToCore14TaskFunction_tPCKcK8uint32_tPCv11UBaseType_tPC12TaskHandle_tK10BaseType_t
     // https://freertos.org/Documentation/02-Kernel/04-API-references/02-Task-control/03-xTaskDelayUntil
-    xTaskCreate(&actuationTask, "actuationTask", 2048, (void *)&xQueue, 23, &actuationHandle);
-    xTaskCreate(&acquisitionTask, "acquisitionTask", 262144, (void *)&xQueue, 23, &acquisitionHandle);
+    xTaskCreate(&actuationTask, "actuationTask", 2048, (void *)&xQueue, 6, &actuationHandle);
+    xTaskCreate(&acquisitionTask, "acquisitionTask", 262144, (void *)&xQueue, 6, &acquisitionHandle);
 }
 
+TickType_t xLastWakeTimeLoop = xTaskGetTickCount();
 void loop()
 {
+    xTaskDelayUntil(&xLastWakeTimeLoop, portTICK_PERIOD_MS * 1000 * 60);
 }

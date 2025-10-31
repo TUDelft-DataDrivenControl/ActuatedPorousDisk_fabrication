@@ -6,7 +6,7 @@
 #include <Arduino.h>
 #include <queue>
 
-int16_t step_towards(int16_t tar, int16_t pos)
+inline int16_t step_towards(int16_t tar, int16_t pos)
 {
     // For timing see section 7.6 of drv8825 docs
     // https://www.ti.com/lit/ds/symlink/drv8825.pdf
@@ -43,7 +43,7 @@ int16_t step_towards(int16_t tar, int16_t pos)
     int16_t position{0};
 
     TickType_t xLastWakeTime = xTaskGetTickCount();
-    TickType_t xPeriod = portTICK_PERIOD_MS * round(1000 / FREQ_ACTUATION);
+    TickType_t xPeriod = portTICK_PERIOD_MS;
     std::queue<int16_t> offset_queu;
     for (;;)
     {

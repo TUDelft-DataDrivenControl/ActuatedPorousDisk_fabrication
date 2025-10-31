@@ -1,6 +1,8 @@
 #ifndef AQUISITION_H
 #define AQUISITION_H
 
+// https://how2electronics.com/how-to-use-ads1115-16-bit-adc-module-with-esp32/
+
 // Decoding
 inline int16_t byte2int16(byte enc[2])
 {
@@ -121,7 +123,7 @@ inline int64_t byte2int64(byte enc[8])
                     // Receive duration uint64_t and target int16_t
                     byte duration_encoded[8];
                     bytesRead = Serial.readBytes(duration_encoded, 8); // Read
-                    int16_t duration = byte2int64(duration_encoded);   // Decode
+                    int64_t duration = byte2int64(duration_encoded);   // Decode
                     Serial.println(duration);                          // Echo
 
                     byte target_encoded[2];
@@ -171,20 +173,20 @@ inline int64_t byte2int64(byte enc[8])
                     // Receive duration uint64_t
                     byte duration_encoded[8];
                     bytesRead = Serial.readBytes(duration_encoded, 8);
-                    int16_t duration = byte2int64(duration_encoded); // Decode
+                    int64_t duration = byte2int64(duration_encoded); // Decode
                     Serial.println(duration);                        // Echo
 
                     // Receive encoded control signal int16_t for duration samples
                     byte target_encoded[2 * duration];
-                    for (byte b : target_encoded)
+                    for (uint64_t i = 0; i < 2 * duration; i++)
                     {
-                        bytesRead = Serial.readBytes(&b, 1);
+                        bytesRead = Serial.readBytes(&target_encoded[i], 1);
                     }
 
                     // Decode
                     int16_t target[duration];
                     uint64_t k{0};
-                    for (uint64_t i = 0; i < duration; i += sizeof(int16_t))
+                    for (uint64_t i = 0; i < 2 * duration; i += 2)
                     {
                         byte enc[2] = {target_encoded[i], target_encoded[i + 1]};
                         target[k] = byte2int16(enc);
@@ -201,7 +203,7 @@ inline int64_t byte2int64(byte enc[8])
                     for (uint64_t i = 0; i < duration; i++)
                     {
                         // Set target
-                        xQueueSend(*queue, &target, (TickType_t)2);
+                        xQueueSend(*queue, &target[i], (TickType_t)2);
 
                         // Get sample
                         SG1[i] = ads.readADC_SingleEnded(0);

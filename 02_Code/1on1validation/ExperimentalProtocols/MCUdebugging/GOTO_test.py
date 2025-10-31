@@ -7,4 +7,7 @@ from MCUcomm import *
 
 MCU = serial.Serial(port='COM3', baudrate=115200, timeout=.1)
 
-send_goto(MCU, 20)
+send_goto(MCU, 400, ignoreErr=True)
+
+# while(True):
+#     print(MCU.readline().decode())
