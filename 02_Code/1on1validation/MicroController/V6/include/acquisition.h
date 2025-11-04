@@ -1,7 +1,7 @@
 #ifndef AQUISITION_H
 #define AQUISITION_H
 
-// https://how2electronics.com/how-to-use-ads1115-16-bit-adc-module-with-esp32/
+#include <queue>
 
 // Decoding
 inline int16_t byte2int16(byte enc[2])
@@ -20,6 +20,34 @@ inline uint64_t byte2uint64(byte enc[8])
             ((uint64_t)(((uint8_t *)(enc))[5]) << 40) +
             ((uint64_t)(((uint8_t *)(enc))[6]) << 48) +
             ((uint64_t)(((uint8_t *)(enc))[7]) << 56));
+}
+
+inline int16_t step_towards(int16_t tar, int16_t pos)
+{
+    // For timing see section 7.6 of drv8825 docs
+    // https://www.ti.com/lit/ds/symlink/drv8825.pdf
+    int16_t dir{0};
+    if (tar > pos)
+    {
+        dir = 1;
+        digitalWrite(DIR_PIN, LOW);
+        delayMicroseconds(5); // Setup time
+        digitalWrite(STEP_PIN, LOW);
+        delayMicroseconds(5); // Pulse time
+        digitalWrite(STEP_PIN, HIGH);
+        delayMicroseconds(5); // Pulse time
+    }
+    else if (tar < pos)
+    {
+        dir = -1;
+        digitalWrite(DIR_PIN, HIGH);
+        delayMicroseconds(5); // Setup time
+        digitalWrite(STEP_PIN, LOW);
+        delayMicroseconds(5); // Pulse time
+        digitalWrite(STEP_PIN, HIGH);
+        delayMicroseconds(5); // Pulse time
+    }
+    return dir;
 }
 
 [[noreturn]] void acquisitionTask(void *parameter)
@@ -45,16 +73,15 @@ inline uint64_t byte2uint64(byte enc[8])
         led.show();
         xTaskDelayUntil(&xLastWakeTime, portTICK_PERIOD_MS * 500);
     }
-
     led.setPixelColor(0, 0x00FF8000);
     led.show();
 
-    QueueHandle_t *queue{static_cast<QueueHandle_t *>(parameter)};
-
+    // INIT ADC
+    // https://how2electronics.com/how-to-use-ads1115-16-bit-adc-module-with-esp32/
     Adafruit_ADS1115 ads;
     while (!ads.begin())
     {
-        led.setPixelColor(0, 0x00FF0000);
+        led.setPixelColor(0, 0x00FF00FF);
         led.show();
         xTaskDelayUntil(&xLastWakeTime, portTICK_PERIOD_MS * 500);
         led.setPixelColor(0, 0x00000000);
@@ -64,16 +91,26 @@ inline uint64_t byte2uint64(byte enc[8])
     ads.setGain(GAIN_SIXTEEN);
     ads.setDataRate(RATE_ADS1115_860SPS);
 
+    // INIT STEPPER
+    int16_t target{0};
+    int16_t position{0};
+
+    std::queue<int16_t> offset_queu;
+    std::queue<int16_t> offset;
+
+    // BOOT OK
+    Serial.println("BOOT OK");
     led.setPixelColor(0, 0x0000FF00);
     led.show();
-    Serial.println("BOOT OK");
+
+    // MAIN LOOP
     for (;;)
     {
         // Wait for 4 bytes of CMD
         if (Serial.available() >= 4)
         {
-            vTaskDelay(100 / portTICK_PERIOD_MS);
-            led.setPixelColor(0, 0x00000000); // cmd received, set off
+            vTaskDelay(200 * portTICK_PERIOD_MS); // give other tasks some CPU time
+            led.setPixelColor(0, 0x00000000);     // cmd received, set off
             led.show();
 
             // Receive CMD
@@ -91,8 +128,12 @@ inline uint64_t byte2uint64(byte enc[8])
                 // Decode target
                 int16_t target = byte2int16(target_encoded);
 
-                // Set target
-                xQueueSend(*queue, &target, (TickType_t)2);
+                // Go to target blockingly
+                while (position - offset.back() != target)
+                {
+                    position += step_towards(target, position - offset.back());
+                    xTaskDelayUntil(&xLastWakeTime, portTICK_PERIOD_MS * 5);
+                }
                 Serial.println("GOTO COMPLETE");
             }
             else if (*(int *)(CMD) == *(int *)("STRT"))
@@ -122,13 +163,17 @@ inline uint64_t byte2uint64(byte enc[8])
                 xLastWakeTime = xTaskGetTickCount();
                 for (uint64_t i = 0; i < duration; i++)
                 {
-                    // Set target
-                    xQueueSend(*queue, &target[i], (TickType_t)2);
-
                     // Get sample
                     SG1[i] = ads.readADC_SingleEnded(0);
                     Time[i] = xTaskGetTickCount() * (1000 / configTICK_RATE_HZ);
                     SG2[i] = ads.readADC_SingleEnded(1);
+
+                    // Run motor until time runs out
+                    while (position - offset.back() != target[i] && xTaskGetTickCount() - xLastWakeTime < xPeriod - (TickType_t)(1))
+                    {
+                        position += step_towards(target[i], position - offset.back());
+                    }
+
                     xTaskDelayUntil(&xLastWakeTime, xPeriod);
                 }
 
@@ -167,9 +212,27 @@ inline uint64_t byte2uint64(byte enc[8])
                 }
             }
         }
-
         led.setPixelColor(0, 0x0000FF00); // Ready for cmd, set green
         led.show();
+
+        // HOME STEPPER
+        int16_t potread = (int16_t)(map(analogRead(POT_PIN), (4096 / 2), (4096 / 1), -213, 213));
+        offset_queu.push(potread);
+        while (offset_queu.size() > 25)
+        {
+            offset_queu.pop();
+        }
+
+        offset = offset_queu;
+        while (offset.size() > 1)
+        {
+            offset.back() += offset.front();
+            offset.pop();
+        }
+        offset.back() /= (int16_t)(offset_queu.size());
+
+        position += step_towards(target, position - offset.back());
+
         xTaskDelayUntil(&xLastWakeTime, xPeriod);
     }
 }

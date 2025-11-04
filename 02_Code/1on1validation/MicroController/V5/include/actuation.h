@@ -26,10 +26,10 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
 
     if (not(tar == pos))
     {
-        digitalWrite(STEP_PIN, HIGH);
+        digitalWrite(STEP_PIN, LOW);
         delayMicroseconds(5); // Pulse time
         // delay(150);            //!
-        digitalWrite(STEP_PIN, LOW);
+        digitalWrite(STEP_PIN, HIGH);
         delayMicroseconds(5); // Pulse time
         // delay(150);            //!
     }
