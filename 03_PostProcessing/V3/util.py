@@ -1,4 +1,5 @@
 import numpy as np
+import scipy as sp
 import os
 import matplotlib.pyplot as plt
 
@@ -21,15 +22,27 @@ bit16 = 2**16
 #!# Helper functions
 
 def setPlotStyle():
-    plt.rcParams.update({ 'text.usetex':        False,              'mathtext.fontset':         'cm',
-                      'font.size':          18.0,               'axes.labelsize':           'large',
-                      'xtick.labelsize':    'large',           'ytick.labelsize':          'large',
-                      'axes.grid':          True,               'axes.formatter.limits':    [-3, 6],
-                      'grid.alpha':         0.5,                'figure.figsize':           [10.0, 10.0/1.618],
-                      'figure.constrained_layout.use': True,    'scatter.marker':           'x',
-                      'savefig.dpi':        700,                'savefig.bbox':             'tight',
-                      'savefig.pad_inches': 0.05,               #'savefig.transparent':      True
+    plt.rcParams.update({ 
+                    'mathtext.fontset':         'cm',
+                    'axes.labelsize':           'medium',
+                    'xtick.labelsize':    'medium',           'ytick.labelsize':          'medium',
+                    'axes.grid':          True,               'axes.formatter.limits':    [-3, 6],
+                    'grid.alpha':         0.5,                'figure.figsize':           [12.0, 12.0/1.8],
+                    'figure.constrained_layout.use': True,    'scatter.marker':           'x',
+                    'savefig.dpi':        300,                'savefig.bbox':             'tight',
+                    'savefig.pad_inches': 0.05,               #'savefig.transparent':      True,
+                    # "pgf.texsystem": "pdflatex",
+                    'font.family': 'serif',
+                    'font.size' : 10,
+                    'text.usetex': True,
+                    # 'pgf.rcfonts': False,
+                    'svg.fonttype': 'none',
+                    'legend.fontsize': 10,
+                    'text.latex.preamble': r"\usepackage{amsmath}\usepackage{amssymb}"
                       })
+    
+C1 = '#113B6C'
+C2 = '#4FB068'
 
 def getFiles(folder, excludeStr=None): 
     '''
@@ -45,3 +58,21 @@ def strain2thrust(eps, J, eps0=0.):
     
 def strain2ct(eps, J, eps0=0., D=0.1, Uinf=5., rho=1.225):
     return (eps - eps0) / (J * .5 * rho * np.pi * (D/2)**2 * Uinf**2)
+
+def strain2vel(eps, J, Ct, eps0=0., D=0.1, rho=1.225):
+    return np.sqrt( 8 * (eps - eps0) / (J * rho * np.pi * D**2 * Ct) )
+
+def tunnel_freqs_filter(X, fs=125., order=8):
+    cutoff = 10. # Hz
+    b, a = sp.signal.butter(N = order,
+                            Wn = cutoff,
+                            fs = fs,
+                            btype = 'low')
+    return sp.signal.lfilter(b, a, X)
+
+def Rsq(Y0, Y1):
+    # Y0: measurements, Y1: model fit
+    Ymean = np.mean(Y0)
+    SSres = ((Y0 - Y1)**2).sum()
+    SStot = ((Y0 - Ymean)**2).sum()
+    return 1 - SSres/SStot

@@ -11,9 +11,9 @@ PERIOD_ACQUISITION = 8
 Tend = 10.
 T = np.arange(Tend * 1000 / PERIOD_ACQUISITION, dtype=int)
 
-input = np.linspace(0,125*Tend,T.size).round().astype(int) #np.zeros_like(T)
-# input[0:input.size//2] = np.linspace(0,200,input.size//2).round().astype(int)
+input = np.sin(T * 2 * np.pi * 3) * 213
 
+input = input.round().astype(int)
 send_measurement_info(input)
 # while(True):
 #     print(MCU.readline().decode())

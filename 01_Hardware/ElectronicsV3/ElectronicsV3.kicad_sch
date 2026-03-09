@@ -796,6 +796,189 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:LED"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "LED"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Light emitting diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=K 2=A"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "LED diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "LED* LED_SMD:* LED_THT:*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "LED_0_1"
+				(polyline
+					(pts
+						(xy -3.048 -0.762) (xy -4.572 -2.286) (xy -3.81 -2.286) (xy -4.572 -2.286) (xy -4.572 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -0.762) (xy -3.302 -2.286) (xy -2.54 -2.286) (xy -3.302 -2.286) (xy -3.302 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 0) (xy 1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "LED_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:R"
 			(pin_numbers
 				(hide yes)
@@ -3708,131 +3891,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "power:+24V"
-			(power)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+24V"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+24V\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+24V_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+24V_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "power:+3V3"
 			(power)
 			(pin_numbers
@@ -4496,7 +4554,7 @@
 		)
 	)
 	(rectangle
-		(start 19.685 81.28)
+		(start 15.875 81.28)
 		(end 106.68 145.415)
 		(stroke
 			(width 0)
@@ -4556,7 +4614,7 @@
 		)
 		(uuid "03b40680-c45c-49e1-b8b9-3597f4de4389")
 	)
-	(text "1.4"
+	(text "2.0\n"
 		(exclude_from_sim no)
 		(at 268.478 192.786 0)
 		(effects
@@ -4620,7 +4678,7 @@
 		)
 		(uuid "c52bccde-0092-46fb-811a-7f3076ee4374")
 	)
-	(text "2025-10-20"
+	(text "2025-11-27"
 		(exclude_from_sim no)
 		(at 206.248 192.532 0)
 		(effects
@@ -4644,6 +4702,94 @@
 		)
 		(uuid "e4512846-2b4e-4c41-8a68-6c9bb8ec369a")
 	)
+	(text_box "The wires to the strain gauges should be twisted and ideally shielded. Also add some pull relief."
+		(exclude_from_sim no)
+		(at 180.975 84.455 0)
+		(size 23.495 13.335)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 255 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 0.4)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "09f992fe-6b57-40e9-99e2-133c83367dca")
+	)
+	(text_box "We used a Polulu DRV8825 (clone). Please inspect the documentation on how to set the current limiter for proper microstepping."
+		(exclude_from_sim no)
+		(at 16.51 93.345 0)
+		(size 26.035 15.875)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 255 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 0.4)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "0e4c5a56-515a-49d9-be75-ba006d890468")
+	)
+	(text_box "Set ADS1115 amplifier to 16 gain with code."
+		(exclude_from_sim no)
+		(at 222.25 50.8 0)
+		(size 24.13 5.715)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0.0508)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 205 205 205 1)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "4d9a4f4e-7951-473c-8ad5-893fcc453d18")
+	)
+	(text_box "The wires to the stepper motor can cause a huge electrical field! They need to be twisted per coil and collectively shielded. We repurposed an ethernet CAT cable for this."
+		(exclude_from_sim no)
+		(at 16.51 132.08 0)
+		(size 32.385 13.335)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 255 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 0.4)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "8fd4225f-0271-46ae-8284-be619bc5a5df")
+	)
 	(text_box "I2C address	| Addr. to\n0x48 		| GND\n0x49 		| Vin\n0x4A 		| SDA\n0x4B 		| SCL"
 		(exclude_from_sim no)
 		(at 210.82 38.1 0)
@@ -4666,7 +4812,29 @@
 		)
 		(uuid "9dbb64a4-3777-47a9-a91b-53ca99733a3f")
 	)
-	(text_box "Replace both gain potmeters with constant resistor of R?? for a ?? gain"
+	(text_box "Filter is a 6th order Chebyshev type lowpass filter with a 40Hz cutoff frequency"
+		(exclude_from_sim no)
+		(at 249.555 109.22 0)
+		(size 34.925 7.62)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0.0508)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 205 205 205 1)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "ab465972-8865-48de-8bf3-7403b2da81dd")
+	)
+	(text_box "Replace both gain potmeters with constant resistor of 68Ω for a 727 gain."
 		(exclude_from_sim no)
 		(at 201.93 132.08 0)
 		(size 34.925 7.62)
@@ -4723,12 +4891,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1f61f297-09c4-4fdc-9902-2e2357f08164")
-	)
-	(junction
-		(at 83.82 118.11)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "20f4aeec-77a9-43c7-aad7-213fcaf29061")
 	)
 	(junction
 		(at 38.1 120.65)
@@ -7067,10 +7229,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "34645e85-fdb4-4171-8348-435bd439e399")
-		(property "Reference" "R4"
-			(at 176.5301 124.46 0)
+		(property "Reference" "350Ω"
+			(at 176.53 123.698 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7079,7 +7240,7 @@
 			)
 		)
 		(property "Value" "R"
-			(at 173.9901 124.46 0)
+			(at 173.99 123.698 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7123,7 +7284,7 @@
 		(instances
 			(project ""
 				(path "/f4854c19-51dc-42b5-a843-faca72143437"
-					(reference "R4")
+					(reference "350Ω")
 					(unit 1)
 				)
 			)
@@ -7147,7 +7308,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "R36"
+		(property "Value" "36Ω"
 			(at 88.9 68.5799 0)
 			(effects
 				(font
@@ -7273,10 +7434,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "456c8931-474d-4cdc-99ae-a5d7daee4512")
-		(property "Reference" "R5"
-			(at 166.3701 124.46 0)
+		(property "Reference" "350Ω"
+			(at 166.37 123.698 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7285,7 +7445,7 @@
 			)
 		)
 		(property "Value" "R"
-			(at 163.8301 124.46 0)
+			(at 163.83 123.698 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7329,7 +7489,7 @@
 		(instances
 			(project "ElectronicsV3"
 				(path "/f4854c19-51dc-42b5-a843-faca72143437"
-					(reference "R5")
+					(reference "350Ω")
 					(unit 1)
 				)
 			)
@@ -7517,7 +7677,7 @@
 				)
 			)
 		)
-		(property "Value" "R5k"
+		(property "Value" "5kΩ"
 			(at 153.67 19.558 90)
 			(effects
 				(font
@@ -8023,7 +8183,7 @@
 				)
 			)
 		)
-		(property "Value" "R750"
+		(property "Value" "750Ω"
 			(at 74.93 86.36 90)
 			(effects
 				(font
@@ -8156,7 +8316,7 @@
 				)
 			)
 		)
-		(property "Value" "R750"
+		(property "Value" "750Ω"
 			(at 64.77 86.36 90)
 			(effects
 				(font
@@ -8363,7 +8523,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "R36"
+		(property "Value" "36Ω"
 			(at 50.8 68.5799 0)
 			(effects
 				(font
@@ -8698,7 +8858,7 @@
 				)
 			)
 		)
-		(property "Value" "R5k"
+		(property "Value" "5kΩ"
 			(at 153.67 29.972 90)
 			(effects
 				(font
@@ -8746,73 +8906,6 @@
 			(project ""
 				(path "/f4854c19-51dc-42b5-a843-faca72143437"
 					(reference "RV1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+24V")
-		(at 83.82 118.11 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9dd4f7eb-f095-4a69-84db-f4aec46a760e")
-		(property "Reference" "#PWR09"
-			(at 80.01 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+24V"
-			(at 87.63 118.1099 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 83.82 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 83.82 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+24V\""
-			(at 83.82 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "fa5a121a-2ac0-4bab-858e-9df0261bfe28")
-		)
-		(instances
-			(project ""
-				(path "/f4854c19-51dc-42b5-a843-faca72143437"
-					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -9013,6 +9106,84 @@
 			(project "ElectronicsV3"
 				(path "/f4854c19-51dc-42b5-a843-faca72143437"
 					(reference "#PWR019")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 69.85 104.14 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a48cb791-d938-4da1-a9fa-03893c7746d4")
+		(property "Reference" "D1"
+			(at 71.628 102.362 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "LED"
+			(at 71.628 104.902 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 69.85 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 69.85 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 69.85 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 69.85 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3df67ca6-12eb-45f1-a46f-1b60a020744d")
+		)
+		(pin "1"
+			(uuid "823b5e26-a5cb-4cbf-a8ae-bf465e2dfe9b")
+		)
+		(instances
+			(project ""
+				(path "/f4854c19-51dc-42b5-a843-faca72143437"
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -9562,7 +9733,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "+24V"
+		(property "Value" "+15V"
 			(at 87.63 124.3301 0)
 			(effects
 				(font

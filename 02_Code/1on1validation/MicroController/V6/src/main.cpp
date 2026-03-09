@@ -12,9 +12,6 @@
 #define LED_PIN 47
 
 // Modules
-#include <Arduino.h>
-#include <Wire.h>
-
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_ADS1X15.h>
 

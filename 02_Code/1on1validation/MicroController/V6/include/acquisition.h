@@ -33,9 +33,9 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
         digitalWrite(DIR_PIN, LOW);
         delayMicroseconds(5); // Setup time
         digitalWrite(STEP_PIN, LOW);
-        delayMicroseconds(5); // Pulse time
+        delayMicroseconds(40); // Pulse time
         digitalWrite(STEP_PIN, HIGH);
-        delayMicroseconds(5); // Pulse time
+        delayMicroseconds(100); // Pulse time
     }
     else if (tar < pos)
     {
@@ -43,9 +43,9 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
         digitalWrite(DIR_PIN, HIGH);
         delayMicroseconds(5); // Setup time
         digitalWrite(STEP_PIN, LOW);
-        delayMicroseconds(5); // Pulse time
+        delayMicroseconds(40); // Pulse time
         digitalWrite(STEP_PIN, HIGH);
-        delayMicroseconds(5); // Pulse time
+        delayMicroseconds(100); // Pulse time
     }
     return dir;
 }
@@ -92,7 +92,7 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
     ads.setDataRate(RATE_ADS1115_860SPS);
 
     // INIT STEPPER
-    int16_t target{0};
+    int16_t target_storage{0};
     int16_t position{0};
 
     std::queue<int16_t> offset_queu;
@@ -109,7 +109,7 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
         // Wait for 4 bytes of CMD
         if (Serial.available() >= 4)
         {
-            vTaskDelay(200 * portTICK_PERIOD_MS); // give other tasks some CPU time
+            vTaskDelay(200 * portTICK_PERIOD_MS); // give background tasks some CPU time before acquisition
             led.setPixelColor(0, 0x00000000);     // cmd received, set off
             led.show();
 
@@ -117,26 +117,31 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
             char CMD[4];
             Serial.readBytes(CMD, 4);
 
-            if (*(int *)(CMD) == *(int *)("GOTO"))
+            const byte GOTO[4]{'G', 'O', 'T', 'O'};
+            const byte STRT[4]{'S', 'T', 'R', 'T'};
+
+            if (memcmp(CMD, GOTO, 4) == 0)
             {
+                delay(10);
                 Serial.println("GOTO RECEIVED");
                 // Receive target int16_t
                 byte target_encoded[2];
                 Serial.readBytes(target_encoded, 2);
-                // Echo target
-                Serial.println(*target_encoded);
                 // Decode target
                 int16_t target = byte2int16(target_encoded);
+                // Echo target
+                Serial.println(target);
 
                 // Go to target blockingly
                 while (position - offset.back() != target)
                 {
                     position += step_towards(target, position - offset.back());
-                    xTaskDelayUntil(&xLastWakeTime, portTICK_PERIOD_MS * 5);
+                    xTaskDelayUntil(&xLastWakeTime, portTICK_PERIOD_MS * 10);
                 }
+                target_storage = target;
                 Serial.println("GOTO COMPLETE");
             }
-            else if (*(int *)(CMD) == *(int *)("STRT"))
+            else if (memcmp(CMD, STRT, 4) == 0)
             {
                 Serial.println("STRT RECEIVED");
                 byte duration_encoded[8];
@@ -152,6 +157,10 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
                     Serial.readBytes(target_encoded, 2);    // Read
                     target[i] = byte2int16(target_encoded); // Decode
                     Serial.println(target[i]);              // Echo
+                    if (i % 2000)                           // Every 2000 elements, yield to background processes :(
+                    {
+                        vTaskDelay(1);
+                    }
                 }
 
                 // Gather data for duration while actuating
@@ -169,13 +178,14 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
                     SG2[i] = ads.readADC_SingleEnded(1);
 
                     // Run motor until time runs out
-                    while (position - offset.back() != target[i] && xTaskGetTickCount() - xLastWakeTime < xPeriod - (TickType_t)(1))
+                    while (position - offset.back() != target[i]) // && xTaskGetTickCount() - xLastWakeTime < xPeriod - (TickType_t)(1))
                     {
                         position += step_towards(target[i], position - offset.back());
                     }
 
                     xTaskDelayUntil(&xLastWakeTime, xPeriod);
                 }
+                target_storage = target[duration - 1];
 
                 led.setPixelColor(0, 0x00888888); // start transfer, set gray
                 led.show();
@@ -231,7 +241,7 @@ inline int16_t step_towards(int16_t tar, int16_t pos)
         }
         offset.back() /= (int16_t)(offset_queu.size());
 
-        position += step_towards(target, position - offset.back());
+        position += step_towards(target_storage, position - offset.back());
 
         xTaskDelayUntil(&xLastWakeTime, xPeriod);
     }

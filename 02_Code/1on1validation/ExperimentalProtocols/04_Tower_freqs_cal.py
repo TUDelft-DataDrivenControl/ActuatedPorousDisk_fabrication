@@ -4,11 +4,9 @@ Do not turn on the windtunnel.
 '''
 
 import numpy as np
-import random as rng
-import serial
 from MCUcomm import *
 
-Tmeas = 30. # s,  Measuring time
+Tmeas = 20. # s,  Measuring time
 DT = 8 / 1000 # s,  Sampling period
 Nsamples = (np.round(Tmeas/DT)).astype(int)
 
@@ -21,6 +19,6 @@ while ans != "y":
 send_measurement_info(MCU_input)
 T, SG1, SG2 = receive_timeseries()
 
-fn = "results\\04_Tower_freqs_cal\\ImpulseResonse.npz" # Relative path and filename
+fn = "results\\04_freqs_cal\\TowerImpulseResponse.npz" # Relative path and filename
 np.savez(file=fn, T=T, SG1=SG1, SG2=SG2, allow_pickle=False)
 print(f"Saved to {fn}")
