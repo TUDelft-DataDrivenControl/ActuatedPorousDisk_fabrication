@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as plt
 
 ## GLOBALS
-resultsFolder = r"C:\Users\sachinumans\OneDrive - Delft University of Technology\Documents\01a_Physical_Experiment\ActuatedPorousDisk_fabrication\02_Code\1on1validation\ExperimentalProtocols\results"
+resultsFolder = r"C:\Users\sachinumans\OneDrive - Delft University of Technology\Documents\01_mainProject\Experimental\ActuatedPorousDisk_fabrication\02_Code\1on1validation\ExperimentalProtocols\results"
 
 Tstartup = 10. # s,  Actuation startup time
 Tsettle = 10. # s,  Settling time
